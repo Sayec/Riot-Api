@@ -42,7 +42,6 @@ button.addEventListener('click', () => {
     console.log('not available');
   }
 });
-let riot_api;
 
 // const riot_api = 'RGAPI-2bb8932a-5239-4034-96fb-a4fb0640de50';
 const input = document.querySelector('input');
@@ -62,7 +61,7 @@ document.addEventListener('DOMContentLoaded', async () => {
   const name = paramName;
   document.title = name;
   let matchesArray = [];
-  riot_api = await getApi();
+  // riot_api = await getApi();
   playerData = await getSummonerName(name);
   playerRank = await getUserRank(playerData);
   console.log(playerRank);
@@ -85,12 +84,12 @@ document.addEventListener('DOMContentLoaded', async () => {
   console.log(data);
 });
 
-const getApi = async () => {
-  const response = await fetch('/getAPI');
-  const data = response.json();
-  console.log(data);
-  return data;
-};
+// const getApi = async () => {
+//   const response = await fetch('/getAPI');
+//   const data = response.json();
+//   console.log(data);
+//   return data;
+// };
 
 const getSummonerName = async (name) => {
   const response = await fetch(`/summonerName/${name}`);
