@@ -63,7 +63,6 @@ document.addEventListener('DOMContentLoaded', async () => {
   document.title = name;
   let matchesArray = [];
   riot_api = await getApi();
-  console.log(riot_api);
   playerData = await getSummonerName(name);
   playerRank = await getUserRank(playerData);
   console.log(playerRank);
@@ -94,38 +93,37 @@ const getApi = async () => {
 };
 
 const getSummonerName = async (name) => {
-  const response = await fetch(
-    `https://euw1.api.riotgames.com/lol/summoner/v4/summoners/by-name/${name}?api_key=${riot_api}`
-  );
+  const response = await fetch(`/summonerName/${name}`);
   const data = await response.json();
   return data;
 };
 
 const getUserRank = async ({ id }) => {
-  const response = await fetch(
-    `https://euw1.api.riotgames.com/lol/league/v4/entries/by-summoner/${id}?api_key=${riot_api}`
-  );
+  const response = await fetch(`/summonerRank/${id}`);
   const data = await response.json();
   const rank = data.filter((element) => {
     return element.queueType === 'RANKED_SOLO_5x5';
   });
   return rank[0];
 };
-const getPlayerMatches = async ({ puuid }) => {
-  const response = await fetch(
-    `https://europe.api.riotgames.com/lol/match/v5/matches/by-puuid/${puuid}/ids?start=0&count=20&api_key=${riot_api}`
-  );
-  const data = await response.json();
-  return data;
-};
-const getMatchParti = async (matchId) => {
-  const response = await fetch(
-    `https://europe.api.riotgames.com/lol/match/v5/matches/${matchId}?api_key=${riot_api}`
-  );
-  const data = await response.json();
-  return data;
-};
 
+const getPlayerMatches = async ({ puuid }) => {
+  const response = await fetch(`/playerMatch/${puuid}`);
+  const data = await response.json();
+  return data;
+};
+// const getMatchParti = async (matchId) => {
+//   const response = await fetch(
+//     `https://europe.api.riotgames.com/lol/match/v5/matches/${matchId}?api_key=${riot_api}`
+//   );
+//   const data = await response.json();
+//   return data;
+// };
+const getMatchParti = async (matchId) => {
+  const response = await fetch(`/matchParti/${matchId}`);
+  const data = await response.json();
+  return data;
+};
 const getNumberofMatches = (data, getNumberofMatches) => {
   let promises = [];
   for (let i = 0; i < getNumberofMatches; i++) {
