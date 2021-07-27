@@ -59,7 +59,7 @@ btn.addEventListener('click', async () => {
 document.addEventListener('DOMContentLoaded', async () => {
   console.log('dziala');
   const name = paramName;
-  document.title = name;
+  document.title = name || 'Check player rank';
   let matchesArray = [];
   // riot_api = await getApi();
   playerData = await getSummonerName(name);
