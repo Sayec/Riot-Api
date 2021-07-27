@@ -62,26 +62,28 @@ document.addEventListener('DOMContentLoaded', async () => {
   document.title = name || 'Check player rank';
   let matchesArray = [];
   // riot_api = await getApi();
-  playerData = await getSummonerName(name);
-  playerRank = await getUserRank(playerData);
-  console.log(playerRank);
-  rankText.innerHTML = `${playerRank.tier} ${playerRank.rank} ${playerRank.leaguePoints}`;
-  playerMatches = await getPlayerMatches(playerData);
-  matchPromises = getNumberofMatches(playerMatches, 10);
-  Promise.all(matchPromises).then((res) => {
-    matchesArray = res;
-    printStats(matchesArray);
-  });
-  const options = {
-    method: 'POST',
-    headers: {
-      'Content-Type': 'application/json',
-    },
-    body: JSON.stringify(playerData),
-  };
-  const response = await fetch('/api', options);
-  const data = await response.json();
-  console.log(data);
+  if (name) {
+    playerData = await getSummonerName(name);
+    playerRank = await getUserRank(playerData);
+    console.log(playerRank);
+    rankText.innerHTML = `${playerRank.tier} ${playerRank.rank} ${playerRank.leaguePoints}`;
+    playerMatches = await getPlayerMatches(playerData);
+    matchPromises = getNumberofMatches(playerMatches, 10);
+    Promise.all(matchPromises).then((res) => {
+      matchesArray = res;
+      printStats(matchesArray);
+    });
+    const options = {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify(playerData),
+    };
+    const response = await fetch('/api', options);
+    const data = await response.json();
+    console.log(data);
+  }
 });
 
 // const getApi = async () => {
