@@ -41,7 +41,8 @@ button.addEventListener('click', () => {
 
 const input = document.querySelector('input');
 const btn = document.querySelector('a.search');
-const rankText = document.querySelector('p');
+const rankText = document.querySelector('p.rank');
+const nameText = document.querySelector('p.name');
 const statsContainer = document.querySelector('div.stats-container');
 const server_select = document.getElementById('server_select');
 
@@ -73,6 +74,7 @@ document.addEventListener('DOMContentLoaded', async () => {
     console.log(playerData);
     playerRank = await getUserRank(playerData, server);
     console.log(playerRank);
+    nameText.innerHTML = name;
     rankText.innerHTML = playerRank
       ? `${playerRank.tier} ${playerRank.rank} ${playerRank.leaguePoints}`
       : 'brak danych o randze gracza na Solo 5v5';

@@ -4,8 +4,15 @@
   box-sizing: border-box;
   font-family: Arial, Helvetica, sans-serif;
 }
+div.favourite {
+  width: 30%;
+  margin: 0 auto;
+}
+a {
+  margin: 30px;
+}
 form {
-  width: 500px;
+  width: 700px;
   margin: 0 auto;
   margin-top: 50px;
   text-align: center;
@@ -25,7 +32,7 @@ form a.search {
 form a:hover {
   cursor: pointer;
 }
-p.rank {
+p {
   font-size: 30px;
   margin: 20px auto;
   text-align: center;
