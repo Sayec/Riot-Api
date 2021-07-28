@@ -15,11 +15,7 @@ fetch('http://ddragon.leagueoflegends.com/cdn/11.15.1/data/en_US/champion.json')
     data_champions = data;
   });
 console.log(window.location);
-let url = new URL(location);
 
-let params = new URLSearchParams(url.search.slice(1));
-let paramName = url.searchParams.get('name');
-console.log(paramName);
 button.addEventListener('click', () => {
   if ('geolocation' in navigator) {
     console.log('available');
@@ -43,30 +39,43 @@ button.addEventListener('click', () => {
   }
 });
 
-// const riot_api = 'RGAPI-2bb8932a-5239-4034-96fb-a4fb0640de50';
 const input = document.querySelector('input');
 const btn = document.querySelector('a.search');
 const rankText = document.querySelector('p');
 const statsContainer = document.querySelector('div.stats-container');
+const server_select = document.getElementById('server_select');
+
+let url = new URL(location);
+let params = new URLSearchParams(url.search.slice(1));
+let paramName = url.searchParams.get('name');
+let paramServerName = url.searchParams.get('server');
+
 let playerData = {};
 let playerRank = {};
 let idMatch = 0;
+server_select.addEventListener('change', () => {});
 btn.addEventListener('click', async () => {
   const name = input.value;
-  location.href = `./?name=${name}`;
+  const server = server_select.value;
+  location.href = `./?name=${name}&server=${server}`;
 });
-// btn.addEventListener('click', async () => {
 document.addEventListener('DOMContentLoaded', async () => {
-  console.log('dziala');
   const name = paramName;
+  const server = paramServerName;
+  let array = Array.from(server_select.options);
+  server_select.options[
+    array.map((element) => element.value).indexOf(server)
+  ].selected = true;
   document.title = name || 'Check player rank';
   let matchesArray = [];
-  // riot_api = await getApi();
   if (name) {
-    playerData = await getSummonerName(name);
-    playerRank = await getUserRank(playerData);
+    playerData = await getSummonerName(name, server);
+    console.log(playerData);
+    playerRank = await getUserRank(playerData, server);
     console.log(playerRank);
-    rankText.innerHTML = `${playerRank.tier} ${playerRank.rank} ${playerRank.leaguePoints}`;
+    rankText.innerHTML = playerRank
+      ? `${playerRank.tier} ${playerRank.rank} ${playerRank.leaguePoints}`
+      : 'brak danych o randze gracza na Solo 5v5';
     playerMatches = await getPlayerMatches(playerData);
     matchPromises = getNumberofMatches(playerMatches, 10);
     Promise.all(matchPromises).then((res) => {
@@ -86,21 +95,14 @@ document.addEventListener('DOMContentLoaded', async () => {
   }
 });
 
-// const getApi = async () => {
-//   const response = await fetch('/getAPI');
-//   const data = response.json();
-//   console.log(data);
-//   return data;
-// };
-
-const getSummonerName = async (name) => {
-  const response = await fetch(`/summonerName/${name}`);
+const getSummonerName = async (name, server) => {
+  const response = await fetch(`/summonerName/${name}/${server}`);
   const data = await response.json();
   return data;
 };
 
-const getUserRank = async ({ id }) => {
-  const response = await fetch(`/summonerRank/${id}`);
+const getUserRank = async ({ id }, server) => {
+  const response = await fetch(`/summonerRank/${id}/${server}`);
   const data = await response.json();
   const rank = data.filter((element) => {
     return element.queueType === 'RANKED_SOLO_5x5';

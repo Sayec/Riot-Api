@@ -15,7 +15,7 @@ const database = new Datastore('database.db');
 database.loadDatabase();
 const riot_api = process.env.API_KEY;
 app.post('/api', (request, response) => {
-  console.log(request.body);
+  // console.log(request.body);
   const timestamp = Date.now();
   const data = request.body;
   data.timestamp = timestamp;
@@ -41,19 +41,19 @@ app.get('/getAPI', (request, response) => {
   response.json(`${process.env.API_KEY}`);
 });
 
-app.get('/summonerName/:name', async (request, response) => {
-  const name = request.params.name;
+app.get('/summonerName/:name/:server', async (request, response) => {
+  const { name, server } = request.params;
   const fetch_response = await fetch(
-    `https://euw1.api.riotgames.com/lol/summoner/v4/summoners/by-name/${name}?api_key=${riot_api}`
+    `https://${server}.api.riotgames.com/lol/summoner/v4/summoners/by-name/${name}?api_key=${riot_api}`
   );
   const data = await fetch_response.json();
   response.json(data);
 });
 
-app.get('/summonerRank/:id', async (request, response) => {
-  const id = request.params.id;
+app.get('/summonerRank/:id/:server', async (request, response) => {
+  const { id, server } = request.params;
   const fetch_response = await fetch(
-    `https://euw1.api.riotgames.com/lol/league/v4/entries/by-summoner/${id}?api_key=${riot_api}`
+    `https://${server}.api.riotgames.com/lol/league/v4/entries/by-summoner/${id}?api_key=${riot_api}`
   );
   const data = await fetch_response.json();
   response.json(data);
