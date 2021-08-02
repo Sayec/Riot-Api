@@ -1,6 +1,6 @@
 // require('dotenv').config();
 
-const button = document.querySelector('button.submit');
+// const button = document.querySelector('button.submit');
 let data_items;
 let data_champions;
 fetch('http://ddragon.leagueoflegends.com/cdn/11.15.1/data/en_US/item.json')
@@ -16,28 +16,28 @@ fetch('http://ddragon.leagueoflegends.com/cdn/11.15.1/data/en_US/champion.json')
   });
 console.log(window.location);
 
-button.addEventListener('click', () => {
-  if ('geolocation' in navigator) {
-    console.log('available');
-    navigator.geolocation.getCurrentPosition(async (position) => {
-      const lat = position.coords.latitude;
-      const lon = position.coords.longitude;
-      const data = { lat, lon };
-      console.log(data);
-      const options = {
-        method: 'POST',
-        url: '/api',
-        data: data,
-      };
+// button.addEventListener('click', () => {
+//   if ('geolocation' in navigator) {
+//     console.log('available');
+//     navigator.geolocation.getCurrentPosition(async (position) => {
+//       const lat = position.coords.latitude;
+//       const lon = position.coords.longitude;
+//       const data = { lat, lon };
+//       console.log(data);
+//       const options = {
+//         method: 'POST',
+//         url: '/api',
+//         data: data,
+//       };
 
-      axios(options).then((response) => {
-        console.log(response.data);
-      });
-    });
-  } else {
-    console.log('not available');
-  }
-});
+//       axios(options).then((response) => {
+//         console.log(response.data);
+//       });
+//     });
+//   } else {
+//     console.log('not available');
+//   }
+// });
 
 const input = document.querySelector('input');
 const btn = document.querySelector('a.search');
