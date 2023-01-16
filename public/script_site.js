@@ -35,7 +35,7 @@ button.addEventListener('click', () => {
   }
 });
 
-const riot_api = 'RGAPI-2bb8932a-5239-4034-96fb-a4fb0640de50';
+const riot_api = process.env.API_KEY;
 const input = document.querySelector('input');
 const btn = document.querySelector('a.search');
 const rankText = document.querySelector('p');

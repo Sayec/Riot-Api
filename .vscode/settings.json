@@ -1,0 +1,12 @@
+{
+  "workbench.iconTheme": "material-icon-theme",
+  "liveSassCompile.settings.excludeList": ["**/node_modules/**", ".vscode/**"],
+  "liveSassCompile.settings.formats": [
+    // You can add more
+    {
+      "format": "compressed",
+      "extensionName": ".css",
+      "savePath": "/public/css"
+    }
+  ]
+}
